@@ -59,7 +59,7 @@ def mr_brain_web_phantom(bw_input, alpha, img_no=0, N=128, TR=3e-3, d_flip=10,
     ph[:, :, 4] = offres * roi_mask
     ph[:, :, 5] = sample #raw data
 
-    show_phantom(ph)
+    #show_phantom(ph)
 
     return ph
 
