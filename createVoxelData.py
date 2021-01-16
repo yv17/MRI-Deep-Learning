@@ -22,9 +22,9 @@ data =  brain_web_loader(dir)
 os.chdir('c:\\Users\\User\\Documents\\FYP-Python')
 
 # Initialise training data size
-totalSet = 10 # Number of set of images
-numPoints = 10 # Number of points in a set of images
-dataSize = totalSet*numPoints
+totalSet = 1000 # Number of set of images
+numPoints = 100 # Number of points in a set of images
+dataSize = totalSet*numPoints # Total number of data size
 
 # Create empty arrays to hold training data and ground truth
 voxel_data = np.zeros((dataSize, npcs))
@@ -54,18 +54,14 @@ for i in range(1,totalSet+1):
         x = random.randint(0, N-1)
         y = random.randint(0, N-1)
 
-        while T2[x,y]==0:
+        while T2[x,y] == 0:
             x = random.randint(0, N-1)
             y = random.randint(0, N-1)
 
         gt_data[(numPoints*i)-j]= T2[x,y]
         voxel_data[(numPoints*i)-j]= np.abs(sig_noise[:,x,y])
-        
-            
-            
-
 
 
 # Save voxel and ground truth data numpy array
-np.save('voxel_data.npy', voxel_data)
-np.save('gt_data.npy', gt_data)
+np.save('voxel_train.npy', voxel_data)
+np.save('gt_train.npy', gt_data)
