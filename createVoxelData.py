@@ -13,13 +13,13 @@ TR = 3e-3
 pcs = np.linspace(0, 2 * np.pi, npcs, endpoint=False)
 
 #Brain phantom 
-#dir = '/Users/yiten/Documents/MRI Relaxometry/BrainWeb' #Change to your directory of BrainWeb
-dir = '/Users/User/Documents/MRI Relaxometry/BrainWeb' #Change to your directory of BrainWeb
+dir = '/Users/yiten/Documents/MRI Relaxometry/BrainWeb' #Change to your directory of BrainWeb
+#dir = '/Users/User/Documents/MRI Relaxometry/BrainWeb' #Change to your directory of BrainWeb
 data =  brain_web_loader(dir)
 
 #Change working directory
-#os.chdir('c:\\Users\\yiten\\Documents\\FYP (Python)')
-os.chdir('c:\\Users\\User\\Documents\\FYP-Python')
+os.chdir('c:\\Users\\yiten\\Documents\\FYP (Python)')
+#os.chdir('c:\\Users\\User\\Documents\\FYP-Python')
 
 # Initialise training data size
 totalSet = 1000 # Number of set of images
