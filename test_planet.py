@@ -77,8 +77,7 @@ if __name__ == '__main__':
     # counter = 0
 
     # for idx0 in tqdm(idx, leave=False, total=idx.size):
-    #     Meff[idx0], T1map[idx0], T2map[idx0], local_df[idx0] = planet(
-    #         sig_noise[:, idx0], alpha=alpha, TR=TR, T1_guess=2, pcs=pcs, compute_df=True)
+    #     Meff[idx0], T1map[idx0], T2map[idx0], local_df[idx0] = planet(sig_noise[:, idx0], alpha=alpha, TR=TR, T1_guess=2, pcs=pcs, compute_df=True)
     #     counter += 1
     # mask = np.reshape(mask, (N, N))
     # Meff = np.reshape(Meff, (N, N))

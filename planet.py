@@ -9,8 +9,7 @@ def planet(I, alpha, TR, T1_guess, pcs=None,compute_df=False):
         else:
             # Make sure we get phase-cycles as a numpy array
             pcs = np.array(pcs)
-        assert pcs.size == I.size, ('Number of phase-cycles must '
-                                    'match entries of I!')
+        assert pcs.size == I.size, ('Number of phase-cycles must match entries of I!')
 
     # Step 1. Direct linear least squares ellipse fitting to
     ## phase-cycled bSSFP data
@@ -66,8 +65,7 @@ def planet(I, alpha, TR, T1_guess, pcs=None,compute_df=False):
 
     assert 0 < b < 1, '0 < b < 1 has been violated! b = %g' % b
     assert 0 < a < 1, '0 < a < 1 has been violated! a = %g' % a
-    assert 0 < Meff < 1, (
-        '0 < Meff < 1 has been violated! Meff = %g' % Meff)
+    assert 0 < Meff < 1, '0 < Meff < 1 has been violated! Meff = %g' % Meff
 
 
     ca = np.cos(alpha)
