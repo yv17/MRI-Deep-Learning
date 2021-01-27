@@ -43,7 +43,7 @@ for n in range(1,dataSize+1):
     training_data = np.abs(sig_noise[0])
     training_data = training_data[43:83, 50:78]
     for i in range(1,6):
-        training_data = np.concatenate([training_data, np.abs(sig_noise[i])[43:83, 50:78]],axis=1) #axis = 1 column wise
+        training_data = np.concatenate([training_data, np.abs(sig_noise[i])[43:83, 50:78]], axis=1) #axis = 1 column wise
 
     plt.imsave(str(n+2) + '.png',training_data)
 
