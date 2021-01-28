@@ -84,7 +84,7 @@ def mr_brain_web_SNR(Noisy_signal,phantom, noise_level):
     snr_csf = np.sum(sig[np.where(sample == 1)])/(sigma*n_csf)
     snr_gm = np.sum(sig[np.where(sample == 2)])/(sigma*n_gm)
     snr_wm = np.sum(sig[np.where(sample == 3)])/(sigma*n_wm)
-    return snr_csf, snr_gm, snr_wm
+    return snr_csf, snr_gm, snr_wm, n_csf, n_gm, n_gm
 
 def mr_brain_web_get_sd(Noisy_signal,alpha, phantom, mapping, t1_or_t2='t1', B0=3, prec='{:.2f}', noise_level=.0):
     assert t1_or_t2 == 't1' or 't2', 'Please specify ''t1'' or ''t2'''

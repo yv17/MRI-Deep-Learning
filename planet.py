@@ -28,8 +28,7 @@ def planet(I, alpha, TR, T1_guess, pcs=None,compute_df=False):
 
     # Sanity check: make sure we got what we wanted:
     assert np.allclose(yc, 0), 'Ellipse rotation failed! yc = %g' % yc
-    assert xc > 0, ('xc needs to be in the right half-plane! xc = %g'
-                    '' % xc)
+    assert xc > 0, ('xc needs to be in the right half-plane! xc = %g' % xc)
 
 
     # Step 3. Analytical solution for parameters Meff, T1, T2.
@@ -51,9 +50,7 @@ def planet(I, alpha, TR, T1_guess, pcs=None,compute_df=False):
     elif alpha == aE1:
         raise ValueError('Ellipse is a line! x = Meff')
     else:
-        raise ValueError(
-            'Houston, we should never have raised this error...')
-
+        raise ValueError('Houston, we should never have raised this error...')
 
     xc2 = xc**2
     xcA = xc*A
@@ -63,10 +60,13 @@ def planet(I, alpha, TR, T1_guess, pcs=None,compute_df=False):
     ab = a*b
     Meff = xc*(1 - b2)/(1 - ab)
 
-    assert 0 < b < 1, '0 < b < 1 has been violated! b = %g' % b
-    assert 0 < a < 1, '0 < a < 1 has been violated! a = %g' % a
-    assert 0 < Meff < 1, '0 < Meff < 1 has been violated! Meff = %g' % Meff
-
+    try:
+        assert 0 < b < 1, '0 < b < 1 has been violated! b = %g' % b
+        assert 0 < a < 1, '0 < a < 1 has been violated! a = %g' % a
+        assert 0 < Meff < 1, '0 < Meff < 1 has been violated! Meff = %g' % Meff
+    except AssertionError as e:
+        print(repr(e))
+    
     ca = np.cos(alpha)
     T1 = -1*TR/(np.log((a*(1 + ca - ab*ca) - b)/(a*(1 + ca - ab) - b*ca)))
     T2 = -1*TR/np.log(a)
