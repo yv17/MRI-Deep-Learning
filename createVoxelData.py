@@ -13,13 +13,13 @@ TR = 3e-3
 pcs = np.linspace(0, 2*np.pi, npcs, endpoint=False)
 
 #Brain phantom 
-#dir = '/Users/yiten/Documents/MRI Relaxometry/BrainWeb' #Change to your directory of BrainWeb
-dir = '/Users/User/Documents/MRI Relaxometry/BrainWeb' #Change to your directory of BrainWeb
+dir = '/Users/yiten/Documents/MRI Relaxometry/BrainWeb' #Change to your directory of BrainWeb
+#dir = '/Users/User/Documents/MRI Relaxometry/BrainWeb' #Change to your directory of BrainWeb
 data =  brain_web_loader(dir)
 
 #Change working directory
-#os.chdir('c:\\Users\\yiten\\Documents\\FYP (Python)')
-os.chdir('c:\\Users\\User\\Documents\\FYP-Python')
+os.chdir('c:\\Users\\yiten\\Documents\\FYP (Python)')
+#os.chdir('c:\\Users\\User\\Documents\\FYP-Python')
 
 # Initialise training data size
 totalSet = 100 # Number of set of images
@@ -48,9 +48,8 @@ for i in range(1,totalSet+1):
     sig = bssfp(T1, T2, TR, flip_angle, field_map=df, phase_cyc=pcs, M0=M0)
 
     # Add zero mean Gaussian noise with sigma = std
-    noise_level = 0.5
-    sig_fft = np.fft.fft2(sig)
-    sig_noise = np.fft.ifft2(add_noise_gaussian(sig_fft, sigma=noise_level))
+    noise_level = 0.001
+    sig_noise = add_noise_gaussian(sig, sigma=noise_level)
 
     for j in range(1,numPoints+1):
         x = random.randint(0, N-1)

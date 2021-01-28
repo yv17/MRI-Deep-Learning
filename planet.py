@@ -67,10 +67,8 @@ def planet(I, alpha, TR, T1_guess, pcs=None,compute_df=False):
     assert 0 < a < 1, '0 < a < 1 has been violated! a = %g' % a
     assert 0 < Meff < 1, '0 < Meff < 1 has been violated! Meff = %g' % Meff
 
-
     ca = np.cos(alpha)
-    T1 = -1*TR/(
-        np.log((a*(1 + ca - ab*ca) - b)/(a*(1 + ca - ab) - b*ca)))
+    T1 = -1*TR/(np.log((a*(1 + ca - ab*ca) - b)/(a*(1 + ca - ab) - b*ca)))
     T2 = -1*TR/np.log(a)
 
     ## Step 4. Estimation of the local off-resonance df.
