@@ -39,8 +39,8 @@ def generate_data(brain_model, totalSet, numPoints):
         sig = bssfp(T1, T2, TR, flip_angle, field_map=df, phase_cyc=pcs, M0=M0)
 
         # Add zero mean Gaussian noise with sigma = std
-        noise_level = random.uniform(0.05,0.01)
-        # noise_level = 0.001
+        # noise_level = random.uniform(0.0005,0.00025)
+        noise_level = 0.00005
         sig_noise = add_noise_gaussian(sig, sigma=noise_level)
 
         # Calculate SNR and append to empty list of SNR
@@ -71,24 +71,24 @@ def generate_data(brain_model, totalSet, numPoints):
 
 if __name__ == '__main__':
     # Brain phantom 
-    #dir = '/Users/yiten/Documents/MRI Relaxometry/BrainWeb' #Change to your directory of BrainWeb
-    dir = '/Users/User/Documents/MRI Relaxometry/BrainWeb' #Change to your directory of BrainWeb
+    dir = '/Users/yiten/Documents/MRI Relaxometry/BrainWeb' #Change to your directory of BrainWeb
+    #dir = '/Users/User/Documents/MRI Relaxometry/BrainWeb' #Change to your directory of BrainWeb
     brain_model =  brain_web_loader(dir)
 
     #Change working directory
-    #os.chdir('c:\\Users\\yiten\\Documents\\FYP (Python)')
-    os.chdir('c:\\Users\\User\\Documents\\FYP-Python')
+    os.chdir('c:\\Users\\yiten\\Documents\\FYP (Python)')
+    #os.chdir('c:\\Users\\User\\Documents\\FYP-Python')
 
     # Initialise training data size
     totalSet = 100 # Number of set of images
     numPoints = 100 # Number of points in a set of images
     
-    # Generate training data
+    # Generate training, ground truth and snr data
     voxel_data, gt_data, snr_data = generate_data(brain_model, totalSet, numPoints)
 
     # Save voxel, ground truth and snr arrays
-    np.save('voxel_train.npy', voxel_data)
-    np.save('gt_train.npy', gt_data)
-    np.save('snr_train.npy', snr_data)
+    np.save('voxel_data.npy', voxel_data)
+    np.save('gt_data.npy', gt_data)
+    np.save('snr_data.npy', snr_data)
     
 
