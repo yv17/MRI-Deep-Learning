@@ -10,7 +10,7 @@ from phantom_brainweb import mr_brain_web_phantom, brain_web_loader,offres_gen
 def generate_data(brain_model, totalSet, numPoints):
     # Initialise parameters
     N = 128 # NxN resolution, 
-    npcs = 6 # npcs = number of phase-cycle
+    npcs = 8 # npcs = number of phase-cycle
     alpha = np.deg2rad(30) # alpha = flip angle
     TR = 3e-3 # repetition time 
     pcs = np.linspace(0, 2*np.pi, npcs, endpoint=False)
@@ -19,7 +19,6 @@ def generate_data(brain_model, totalSet, numPoints):
     # Create empty arrays/lists to hold training data, ground truth and snr for each tissue
     voxel_data = np.zeros((dataSize, npcs), dtype=np.complex)
     gt_data = np.zeros((dataSize, 1))
-    snr_csf = []
     snr_gm  = []
     snr_wm  = []
 
@@ -40,13 +39,12 @@ def generate_data(brain_model, totalSet, numPoints):
 
         # Add zero mean Gaussian noise with sigma = std
         # noise_level = random.uniform(0.0005,0.00025)
-        noise_level = 0.00005
+        noise_level = 0.005
         sig_noise = add_noise_gaussian(sig, sigma=noise_level)
 
         # Calculate SNR and append to empty list of SNR
         sig_noise2 = np.sum(np.abs(sig_noise),axis=0)/npcs
         noise_r = np.sqrt((2 - (np.pi / 2)) * noise_level ** 2) # Rayleigh-corrected noise level
-        snr_csf.append(np.sum(sig_noise2[np.where(T2 == 1.99)])/(noise_r*754))
         snr_gm.append(np.sum(sig_noise2[np.where(T2 == 0.1)])/(noise_r*2235))
         snr_wm.append(np.sum(sig_noise2[np.where(T2 == 0.08)])/(noise_r*2059))
 
@@ -55,17 +53,16 @@ def generate_data(brain_model, totalSet, numPoints):
             x = random.randint(0, N-1)
             y = random.randint(0, N-1)
 
-            while T2[x,y] == 0:
+            while T2[x,y] == 0 or T2[x,y] == 1.99:
                 x = random.randint(0, N-1)
                 y = random.randint(0, N-1)
 
             gt_data[(numPoints*i)-j]= T2[x,y]
             voxel_data[(numPoints*i)-j]= sig_noise[:,x,y]
 
-    print('SNR range (CSF): %.1f - %.1f' %(min(snr_csf), max(snr_csf)))
-    print('SNR range (GM) : %.1f - %.1f' %(min(snr_wm), max(snr_wm)))
-    print('SNR range (WM) : %.1f - %.1f' %(min(snr_gm), max(snr_gm)))
-    snr_data = np.array([min(snr_csf), max(snr_csf),min(snr_wm), max(snr_wm),min(snr_gm), max(snr_gm)])
+    print('SNR range (GM) : %.1f - %.1f' %(min(snr_gm), max(snr_gm)))
+    print('SNR range (WM) : %.1f - %.1f' %(min(snr_wm), max(snr_wm)))
+    snr_data = np.array([min(snr_gm), max(snr_gm),min(snr_wm), max(snr_wm)])
     return voxel_data, gt_data, snr_data
 
 

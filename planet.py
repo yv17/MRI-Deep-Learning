@@ -94,7 +94,7 @@ def planet(I, alpha, TR, T1_guess, pcs=None,compute_df=False):
         df = -1*theta0/(2*np.pi*TR)
         return (Meff, T1, T2, df)
 
-    return (Meff, T1, T2)
+    return (Meff, a, T2)
 
 def _get_semiaxes(c):
     '''Get semiaxes of A and B'''
