@@ -38,8 +38,8 @@ def generate_data(brain_model, totalSet, numPoints):
         sig = bssfp(T1, T2, TR, flip_angle, field_map=df, phase_cyc=pcs, M0=M0)
 
         # Add zero mean Gaussian noise with sigma = std
-        # noise_level = random.uniform(0.0005,0.00025)
-        noise_level = 0.005
+        noise_level = random.uniform(0.008,0.004)
+        # noise_level = 0.004
         sig_noise = add_noise_gaussian(sig, sigma=noise_level)
 
         # Calculate SNR and append to empty list of SNR
@@ -77,7 +77,7 @@ if __name__ == '__main__':
     #os.chdir('c:\\Users\\User\\Documents\\FYP-Python')
 
     # Initialise training data size
-    totalSet = 100 # Number of set of images
+    totalSet = 1000 # Number of set of images
     numPoints = 100 # Number of points in a set of images
     
     # Generate training, ground truth and snr data

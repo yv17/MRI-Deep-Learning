@@ -61,11 +61,11 @@ def planet(I, alpha, TR, T1_guess, pcs=None,compute_df=False):
     Meff = xc*(1 - b2)/(1 - ab)
 
     try:
-        assert 0 < b < 1, '0 < b < 1 has been violated! b = %g' % b
-        assert 0 < a < 1, '0 < a < 1 has been violated! a = %g' % a
-        assert 0 < Meff < 1, '0 < Meff < 1 has been violated! Meff = %g' % Meff
-    except AssertionError as e:
-        print(repr(e))
+        assert 0 < b < 1    #,'0 < b < 1 has been violated! b = %g' % b
+        assert 0 < a < 1    #,'0 < a < 1 has been violated! a = %g' % a
+        assert 0 < Meff < 1 #,'0 < Meff < 1 has been violated! Meff = %g' % Meff
+    except AssertionError:
+        pass
     
     ca = np.cos(alpha)
     T1 = -1*TR/(np.log((a*(1 + ca - ab*ca) - b)/(a*(1 + ca - ab) - b*ca)))
