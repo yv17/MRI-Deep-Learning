@@ -17,7 +17,7 @@ def generate_data(brain_model, totalSet, numPoints):
     dataSize = totalSet*numPoints # Total number of data size
 
     # Create empty arrays/lists to hold training data, ground truth and snr for each tissue
-    voxel_data = np.zeros((dataSize, npcs), dtype=np.complex)
+    voxel_data = np.zeros((dataSize, npcs), dtype=complex)
     gt_data = np.zeros((dataSize, 1))
     snr_gm  = []
     snr_wm  = []
@@ -25,7 +25,7 @@ def generate_data(brain_model, totalSet, numPoints):
     # Loop to create training data for voxelwise regression
     for i in range(1,totalSet+1):
         # Randomize frequency, check inhomogeneity range
-        freq = 1000 * random.uniform(0,1)
+        freq = 300 * random.uniform(0,1)
         offres = offres_gen(N,f=freq, rotate=True, deform=True) 
 
         # Create brain phantom
@@ -38,8 +38,8 @@ def generate_data(brain_model, totalSet, numPoints):
         sig = bssfp(T1, T2, TR, flip_angle, field_map=df, phase_cyc=pcs, M0=M0)
 
         # Add zero mean Gaussian noise with sigma = std
-        noise_level = random.uniform(0.008,0.004)
-        # noise_level = 0.004
+        #noise_level = random.uniform(0.032,0.016)
+        noise_level = 0.001
         sig_noise = add_noise_gaussian(sig, sigma=noise_level)
 
         # Calculate SNR and append to empty list of SNR
