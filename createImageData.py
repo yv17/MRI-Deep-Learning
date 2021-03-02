@@ -17,13 +17,15 @@ data =  brain_web_loader(dir)
 #Change working directory
 #os.chdir('c:\\Users\\yiten\\Documents\\FYP (Python)\\training_data')
 #os.chdir('c:\\Users\\yiten\\Documents\\FYP (Python)\\training_data2')
-os.chdir('c:\\Users\\yiten\\Documents\\FYP (Python)\\test_data')
+#os.chdir('c:\\Users\\yiten\\Documents\\FYP (Python)\\test_data')
 
 #Loop to create training data starts here
-dataSize = 1
+dataSize = 1000
+img_data = np.zeros((dataSize, 40, 28*6))
+gt_img_data = np.zeros((dataSize, 40, 28))
 for n in range(1,dataSize+1):
     #randomize frequency, check inhomogeneity range
-    freq = 1000 * random.uniform(0,1)
+    freq = 300 * random.uniform(0,1)
     offres = offres_gen(N,f=freq, rotate=True, deform=True) 
 
     #Create brain phantom
@@ -37,28 +39,34 @@ for n in range(1,dataSize+1):
     sig = bssfp(T1, T2, TR, flip_angle, field_map=df, phase_cyc=pcs, M0=M0)
 
     # Add zero mean Gaussian noise with random sigma = std
-    noise_level = random.uniform(0.05,0.01)
+    noise_level = 0.008
     sig_noise = add_noise_gaussian(sig, sigma=noise_level)
 
     training_data = np.abs(sig_noise[0])
     training_data = training_data[43:83, 50:78]
     for i in range(1,6):
         training_data = np.concatenate([training_data, np.abs(sig_noise[i])[43:83, 50:78]], axis=1) #axis = 1 column wise
+    
+    img_data[n-1] = training_data
 
-    plt.imsave(str(n+2) + '.png',training_data)
+    #plt.imsave(str(n+2) + '.png',training_data)
 
 #Loop to create ground truth starts here
 #Change working directory
 #os.chdir('c:\\Users\\yiten\\Documents\\FYP (Python)\\ground_truth')
 # os.chdir('c:\\Users\\yiten\\Documents\\FYP (Python)\\ground_truth2')
-# for n in range(1,dataSize+1):
-#     #Create brain phantom
-#     phantom = mr_brain_web_phantom(data,alpha,offres=0)
-#     #Get phantom parameter
-#     M0, T1, T2, flip_angle,df, _sample = get_phantom(phantom)
+for n in range(1,dataSize+1):
+    #Create brain phantom
+    phantom = mr_brain_web_phantom(data,alpha,offres=0)
+    #Get phantom parameter
+    M0, T1, T2, flip_angle,df, _sample = get_phantom(phantom)
 
-#     ground_truth = T2[43:83, 50:78]
-#     for i in range(1,6):
-#         ground_truth = np.concatenate([ground_truth, T2[43:83, 50:78]],axis=1) #axis = 1 column wise
+    gt_img_data[n-1] = T2[43:83, 50:78]
+    # for i in range(1,6):
+    #     ground_truth = np.concatenate([ground_truth, T2[43:83, 50:78]],axis=1) #axis = 1 column wise
 
-#     plt.imsave(str(n) + '.png',ground_truth)
+    #plt.imsave(str(n) + '.png',ground_truth)
+    
+os.chdir('c:\\Users\\yiten\\Documents\\MRI Relaxometry\\img_reg_data')
+np.save('img_data.npy', img_data)
+np.save('gt_img_data.npy', gt_img_data)

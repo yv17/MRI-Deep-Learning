@@ -84,6 +84,7 @@ if __name__ == '__main__':
     voxel_data, gt_data, snr_data = generate_data(brain_model, totalSet, numPoints)
 
     # Save voxel, ground truth and snr arrays
+    os.chdir('c:\\Users\\yiten\\Documents\\FYP (Python)\\data')
     np.save('voxel_data.npy', voxel_data)
     np.save('gt_data.npy', gt_data)
     np.save('snr_data.npy', snr_data)
