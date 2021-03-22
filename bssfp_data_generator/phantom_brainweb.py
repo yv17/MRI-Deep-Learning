@@ -207,7 +207,8 @@ def _mr_relaxation_parameters(B0):
     # params['tumor'] = [.926, .217, np.nan, .1, -9e-6]
 
     t1_t2 = dict()
-    t1_t2['csf'] = [4.2, 1.99] #labelled T1 and T2 map for CSF
+    # t1_t2['csf'] = [4.2, 1.99] #labelled T1 and T2 map for CSF
+    t1_t2['csf'] = [4.2, 0] # zero out CSF T2
     t1_t2['gray-matter'] = [.857 * (B0 ** .376), .1] #labelled T1 and T2 map for Gray Matter
     t1_t2['white-matter'] = [.583 * (B0 ** .382), .08] #labelled T1 and T2 map for White Matter
     return t1_t2
