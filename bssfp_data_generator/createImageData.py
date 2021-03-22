@@ -23,7 +23,7 @@ ph =  brain_web_loader(dir)
 
 # Variables to store data
 dataSize = 1000
-img_data = np.zeros((dataSize, 40, 28*6))
+img_data = np.zeros((dataSize, 40, 28*6), dtype=complex)
 gt_img_data = np.zeros((dataSize, 40, 28))
 snr_gm  = []
 snr_wm  = []
@@ -49,10 +49,11 @@ for n in range(1,dataSize+1):
     snr_gm.append(snr_gm_temp)
     snr_wm.append(snr_wm_temp)
 
-    training_data = np.abs(sig_noise[0])
+    #training_data = np.abs(sig_noise[0])
+    training_data = sig_noise[0]
     training_data = training_data[43:83, 50:78]
     for i in range(1,6):
-        training_data = np.concatenate([training_data, np.abs(sig_noise[i])[43:83, 50:78]], axis=1) #axis = 1 column wise
+        training_data = np.concatenate([training_data, sig_noise[i][43:83, 50:78]], axis=1) #axis = 1 column wise
     
     img_data[n-1] = training_data
 
@@ -76,6 +77,8 @@ for n in range(1,dataSize+1):
 
 print('SNR range (GM) : %.1f - %.1f' %(min(snr_gm), max(snr_gm)))
 print('SNR range (WM) : %.1f - %.1f' %(min(snr_wm), max(snr_wm)))
+snr_img_data = np.array([min(snr_gm), max(snr_gm),min(snr_wm), max(snr_wm)])
 os.chdir('c:\\Users\\yiten\\Documents\\MRI Relaxometry\\img_reg_data')
 np.save('img_data.npy', img_data)
 np.save('gt_img_data.npy', gt_img_data)
+np.save('snr_img_data.npy',snr_img_data)
