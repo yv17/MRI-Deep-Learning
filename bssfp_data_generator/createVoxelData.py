@@ -10,7 +10,7 @@ from phantom_brainweb import mr_brain_web_phantom, brain_web_loader,offres_gen
 def generate_data(brain_model, totalSet, numPoints):
     # Initialise parameters
     N = 128 # NxN resolution, 
-    npcs = 8 # npcs = number of phase-cycle
+    npcs = 6 # npcs = number of phase-cycle
     alpha = np.deg2rad(30) # alpha = flip angle
     TR = 3e-3 # repetition time 
     pcs = np.linspace(0, 2*np.pi, npcs, endpoint=False)
@@ -38,8 +38,10 @@ def generate_data(brain_model, totalSet, numPoints):
         sig = bssfp(T1, T2, TR, flip_angle, field_map=df, phase_cyc=pcs, M0=M0)
 
         # Add zero mean Gaussian noise with sigma = std
-        #noise_level = random.uniform(0.032,0.016)
-        noise_level = 0.001
+        #noise_level = random.uniform(0.02,0.01) # low snr
+        #noise_level = random.uniform(0.006,0.002) # medium snr
+        noise_level = random.uniform(0.0016,0.0012) # high snr
+        #noise_level = 0.02
         sig_noise = add_noise_gaussian(sig, sigma=noise_level)
 
         # Calculate SNR and append to empty list of SNR

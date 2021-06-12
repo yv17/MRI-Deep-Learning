@@ -23,7 +23,7 @@ ph =  brain_web_loader(dir)
 
 # Variables to store data
 dataSize = 1000
-img_data = np.zeros((dataSize, 40, 28*6), dtype=complex)
+img_data = np.zeros((dataSize, 40, 28*npcs), dtype=complex)
 gt_img_data = np.zeros((dataSize, 40, 28))
 snr_gm  = []
 snr_wm  = []
@@ -43,7 +43,10 @@ for n in range(1,dataSize+1):
     sig = bssfp(T1, T2, TR, flip_angle, field_map=df, phase_cyc=pcs, M0=M0)
 
     # Add zero mean Gaussian noise with random sigma = std
-    noise_level = 0.005
+    #noise_level = random.uniform(0.02,0.0065) # low snr
+    #noise_level = random.uniform(0.0045,0.0014) # medium snr
+    noise_level = random.uniform(0.0011,0.00085) # high snr
+    #noise_level = 0.0025
     sig_noise = add_noise_gaussian(sig, sigma=noise_level)
     _, snr_gm_temp, snr_wm_temp, _, _, _ = mr_brain_web_SNR(sig_noise, phantom, noise_level)
     snr_gm.append(snr_gm_temp)
@@ -52,7 +55,7 @@ for n in range(1,dataSize+1):
     #training_data = np.abs(sig_noise[0])
     training_data = sig_noise[0]
     training_data = training_data[43:83, 50:78]
-    for i in range(1,6):
+    for i in range(1,npcs):
         training_data = np.concatenate([training_data, sig_noise[i][43:83, 50:78]], axis=1) #axis = 1 column wise
     
     img_data[n-1] = training_data

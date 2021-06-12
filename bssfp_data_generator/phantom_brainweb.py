@@ -28,7 +28,6 @@ def mr_brain_web_phantom(bw_input, alpha, img_no=0, N=128, TR=3e-3, d_flip=10,
         offres = offres
 
     sample = bw_input[img_no, :, :]
-
     sample = np.reshape(sample, (bw_input.shape[1], bw_input.shape[2]))
     sample = cv2.resize(sample, (N, N), interpolation=cv2.INTER_NEAREST)
     roi_mask = (sample != 0)
