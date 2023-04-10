@@ -7,3 +7,5 @@ Through [existing bSSFP simulation](https://github.com/yv17/FYP-Python/blob/mast
 i)  [Voxelwise Regression](https://github.com/yv17/FYP-Python/blob/master/voxel_reg.ipynb)
 
 ii) [Image-to-image Regression](https://github.com/yv17/FYP-Python/blob/master/voxel_reg.ipynb)
+
+Find out more details about the project in the [final report](https://github.com/yv17/FYP-Python/blob/master/Final%20Report.pdf)
